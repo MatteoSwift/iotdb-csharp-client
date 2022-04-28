@@ -28,4 +28,7 @@ Global
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {B7E963CE-98DA-4668-A9AB-04520FE27CD0}
 	EndGlobalSection
+	GlobalSection(MonoDevelopProperties) = preSolution
+		description = Apache IoTDB v0.13.x 访问客户端
+	EndGlobalSection
 EndGlobal
