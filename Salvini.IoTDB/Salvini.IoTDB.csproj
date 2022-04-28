@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+      <TargetFramework>net6.0</TargetFramework>
+      <ImplicitUsings>enable</ImplicitUsings>
+      <Nullable>enable</Nullable>
+      <NoWarn>CS0168;CS8618;CS8600;CS8602;CS8603;CS8604;CS8625;CS8765</NoWarn>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <PackageReference Include="ApacheThrift" Version="0.16.0" />
+      <PackageReference Include="log4net" Version="2.0.14" />
+    </ItemGroup>
+
+</Project>

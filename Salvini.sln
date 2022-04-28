@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 25.0.1700.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Salvini.IoTDB.Sample", "Salvini.IoTDB.Sample\Salvini.IoTDB.Sample.csproj", "{B5F1E92B-64A9-49E1-B1BB-A63B11631BEB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Salvini.IoTDB", "Salvini.IoTDB\Salvini.IoTDB.csproj", "{53135919-AF89-40AB-BC44-5153BE42273C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B5F1E92B-64A9-49E1-B1BB-A63B11631BEB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B5F1E92B-64A9-49E1-B1BB-A63B11631BEB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B5F1E92B-64A9-49E1-B1BB-A63B11631BEB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B5F1E92B-64A9-49E1-B1BB-A63B11631BEB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{53135919-AF89-40AB-BC44-5153BE42273C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{53135919-AF89-40AB-BC44-5153BE42273C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{53135919-AF89-40AB-BC44-5153BE42273C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{53135919-AF89-40AB-BC44-5153BE42273C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {B7E963CE-98DA-4668-A9AB-04520FE27CD0}
+	EndGlobalSection
+EndGlobal

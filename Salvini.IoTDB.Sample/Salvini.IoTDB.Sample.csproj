@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+      <TargetFramework>net6.0</TargetFramework>
+      <ImplicitUsings>enable</ImplicitUsings>
+      <Nullable>enable</Nullable>
+      <NoWarn>CS0168;CS8618;CS8600;CS8602;CS8603;CS8604;CS8625;CS8765</NoWarn>
+      <OutputType>Exe</OutputType>
+    </PropertyGroup>
+
+    <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+      <WarningLevel>4</WarningLevel>
+    </PropertyGroup>
+    <ItemGroup>
+     </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Salvini.IoTDB\Salvini.IoTDB.csproj" />
+    </ItemGroup>
+</Project>
