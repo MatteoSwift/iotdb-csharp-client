@@ -22,7 +22,7 @@ public class Session
     private readonly int _poolSize;
     private bool _isClose = true;
     private readonly ClientPool _pool = new();
-    private log4net.ILog _logger;
+    //private log4net.ILog //_logger;
 
     public bool IsOpen => !_isClose;
 
@@ -98,7 +98,7 @@ public class Session
         _fetchSize = Math.Max(1000, Math.Min(Math.Abs(fetchSize), 3600 * 12));
         _poolSize = poolSize ?? Environment.ProcessorCount;
         _enableRpcCompression = enableRpcCompression;
-        _logger = log4net.LogManager.GetLogger("Salvini.IoTDB");
+        //_logger = log4net.LogManager.GetLogger("Salvini.IoTDB");
     }
 
     public async Task OpenAsync()
@@ -126,7 +126,7 @@ public class Session
             }
             catch (TException ex)
             {
-                _logger.Fatal("Error occurs when closing session at server. Maybe server is down", ex);
+                //_logger.Fatal("Error occurs when closing session at server. Maybe server is down", ex);
             }
             client.Transport?.Close();
         }
@@ -143,11 +143,11 @@ public class Session
             try
             {
                 var resp = await client.ServiceClient.setTimeZoneAsync(req);
-                _logger.DebugFormat("setting time zone_id as {0}, server message:{1}", zoneId, resp.Message);
+                //_logger.DebugFormat("setting time zone_id as {0}, server message:{1}", zoneId, resp.Message);
             }
             catch (TException ex)
             {
-                _logger.Fatal("could not set time zone", ex);
+                //_logger.Fatal("could not set time zone", ex);
                 return false;
             }
         }
@@ -168,7 +168,7 @@ public class Session
         }
         catch (TException ex)
         {
-            _logger.Fatal("could not get time zone", ex);
+            //_logger.Fatal("could not get time zone", ex);
             return string.Empty;
         }
         finally
@@ -183,7 +183,7 @@ public class Session
         try
         {
             var status = await client.ServiceClient.setStorageGroupAsync(client.SessionId, groupName);
-            _logger.DebugFormat("set storage group {0} successfully, server message is {1}", groupName, status.Message);
+            //_logger.DebugFormat("set storage group {0} successfully, server message is {1}", groupName, status.Message);
             return VerifyStatus(status, SuccessCode);
         }
         catch (TException)
@@ -194,7 +194,7 @@ public class Session
             try
             {
                 var status = await client.ServiceClient.setStorageGroupAsync(client.SessionId, groupName);
-                _logger.DebugFormat("set storage group {0} successfully, server message is {1}", groupName, status.Message);
+                //_logger.DebugFormat("set storage group {0} successfully, server message is {1}", groupName, status.Message);
                 return VerifyStatus(status, SuccessCode);
             }
             catch (TException ex)
@@ -214,7 +214,7 @@ public class Session
         try
         {
             var status = await client.ServiceClient.deleteStorageGroupsAsync(client.SessionId, new List<string> { groupName });
-            _logger.DebugFormat($"delete storage group {groupName} successfully, server message is {status?.Message}");
+            //_logger.DebugFormat($"delete storage group {groupName} successfully, server message is {status?.Message}");
             return VerifyStatus(status, SuccessCode);
         }
         catch (TException)
@@ -225,7 +225,7 @@ public class Session
             try
             {
                 var status = await client.ServiceClient.deleteStorageGroupsAsync(client.SessionId, new List<string> { groupName });
-                _logger.DebugFormat($"delete storage group {groupName} successfully, server message is {status?.Message}");
+                //_logger.DebugFormat($"delete storage group {groupName} successfully, server message is {status?.Message}");
                 return VerifyStatus(status, SuccessCode);
             }
             catch (TException ex)
@@ -245,7 +245,7 @@ public class Session
         try
         {
             var status = await client.ServiceClient.deleteStorageGroupsAsync(client.SessionId, groupNames);
-            _logger.DebugFormat("delete storage group(s) {0} successfully, server message is {1}", groupNames, status.Message);
+            //_logger.DebugFormat("delete storage group(s) {0} successfully, server message is {1}", groupNames, status.Message);
             return VerifyStatus(status, SuccessCode);
         }
         catch (TException)
@@ -256,7 +256,7 @@ public class Session
             try
             {
                 var status = await client.ServiceClient.deleteStorageGroupsAsync(client.SessionId, groupNames);
-                _logger.DebugFormat("delete storage group(s) {0} successfully, server message is {1}", groupNames, status.Message);
+                //_logger.DebugFormat("delete storage group(s) {0} successfully, server message is {1}", groupNames, status.Message);
                 return VerifyStatus(status, SuccessCode);
             }
             catch (TException ex)
@@ -277,7 +277,7 @@ public class Session
         try
         {
             var status = await client.ServiceClient.createTimeseriesAsync(req);
-            _logger.DebugFormat("creating time series {0} successfully, server message is {1}", tsPath, status.Message);
+            //_logger.DebugFormat("creating time series {0} successfully, server message is {1}", tsPath, status.Message);
             return VerifyStatus(status, SuccessCode);
         }
         catch (TException)
@@ -289,7 +289,7 @@ public class Session
             try
             {
                 var status = await client.ServiceClient.createTimeseriesAsync(req);
-                _logger.DebugFormat("creating time series {0} successfully, server message is {1}", tsPath, status.Message);
+                //_logger.DebugFormat("creating time series {0} successfully, server message is {1}", tsPath, status.Message);
                 return VerifyStatus(status, SuccessCode);
             }
             catch (TException ex)
@@ -315,7 +315,7 @@ public class Session
         try
         {
             var status = await client.ServiceClient.createAlignedTimeseriesAsync(req);
-            _logger.DebugFormat("creating aligned time series {0} successfully, server message is {1}", prefixPath, status.Message);
+            //_logger.DebugFormat("creating aligned time series {0} successfully, server message is {1}", prefixPath, status.Message);
             return VerifyStatus(status, SuccessCode);
         }
         catch (TException)
@@ -327,7 +327,7 @@ public class Session
             try
             {
                 var status = await client.ServiceClient.createAlignedTimeseriesAsync(req);
-                _logger.DebugFormat("creating aligned time series {0} successfully, server message is {1}", prefixPath, status.Message);
+                //_logger.DebugFormat("creating aligned time series {0} successfully, server message is {1}", prefixPath, status.Message);
                 return VerifyStatus(status, SuccessCode);
             }
             catch (TException ex)
@@ -353,7 +353,7 @@ public class Session
         try
         {
             var status = await client.ServiceClient.createMultiTimeseriesAsync(req);
-            _logger.DebugFormat("creating multiple time series {0}, server message is {1}", tsPathLst, status.Message);
+            //_logger.DebugFormat("creating multiple time series {0}, server message is {1}", tsPathLst, status.Message);
             return VerifyStatus(status, SuccessCode);
         }
         catch (TException)
@@ -365,7 +365,7 @@ public class Session
             try
             {
                 var status = await client.ServiceClient.createMultiTimeseriesAsync(req);
-                _logger.DebugFormat("creating multiple time series {0}, server message is {1}", tsPathLst, status.Message);
+                //_logger.DebugFormat("creating multiple time series {0}, server message is {1}", tsPathLst, status.Message);
                 return VerifyStatus(status, SuccessCode);
             }
             catch (TException ex)
@@ -386,7 +386,7 @@ public class Session
         try
         {
             var status = await client.ServiceClient.deleteTimeseriesAsync(client.SessionId, pathList);
-            _logger.DebugFormat("deleting multiple time series {0}, server message is {1}", pathList, status.Message);
+            //_logger.DebugFormat("deleting multiple time series {0}, server message is {1}", pathList, status.Message);
             return VerifyStatus(status, SuccessCode);
         }
         catch (TException)
@@ -397,7 +397,7 @@ public class Session
             try
             {
                 var status = await client.ServiceClient.deleteTimeseriesAsync(client.SessionId, pathList);
-                _logger.DebugFormat("deleting multiple time series {0}, server message is {1}", pathList, status.Message);
+                //_logger.DebugFormat("deleting multiple time series {0}, server message is {1}", pathList, status.Message);
                 return VerifyStatus(status, SuccessCode);
             }
             catch (TException ex)
@@ -438,7 +438,7 @@ public class Session
         try
         {
             var status = await client.ServiceClient.deleteDataAsync(req);
-            _logger.DebugFormat("delete data from {0}, server message is {1}", tsPathLst, status.Message);
+            //_logger.DebugFormat("delete data from {0}, server message is {1}", tsPathLst, status.Message);
             return VerifyStatus(status, SuccessCode);
         }
         catch (TException)
@@ -450,7 +450,7 @@ public class Session
             try
             {
                 var status = await client.ServiceClient.deleteDataAsync(req);
-                _logger.DebugFormat("delete data from {0}, server message is {1}", tsPathLst, status.Message);
+                //_logger.DebugFormat("delete data from {0}, server message is {1}", tsPathLst, status.Message);
                 return VerifyStatus(status, SuccessCode);
             }
             catch (TException ex)
@@ -471,7 +471,7 @@ public class Session
         try
         {
             var status = await client.ServiceClient.insertRecordAsync(req);
-            _logger.DebugFormat("insert one record to device {0}， server message: {1}", deviceId, status.Message);
+            //_logger.DebugFormat("insert one record to device {0}， server message: {1}", deviceId, status.Message);
             return VerifyStatus(status, SuccessCode);
         }
         catch (TException)
@@ -483,7 +483,7 @@ public class Session
             try
             {
                 var status = await client.ServiceClient.insertRecordAsync(req);
-                _logger.DebugFormat("insert one record to device {0}， server message: {1}", deviceId, status.Message);
+                //_logger.DebugFormat("insert one record to device {0}， server message: {1}", deviceId, status.Message);
                 return VerifyStatus(status, SuccessCode);
             }
             catch (TException ex)
@@ -504,7 +504,7 @@ public class Session
         try
         {
             var status = await client.ServiceClient.insertRecordsAsync(req);
-            _logger.DebugFormat("insert multiple records to devices {0}, server message: {1}", deviceId, status.Message);
+            //_logger.DebugFormat("insert multiple records to devices {0}, server message: {1}", deviceId, status.Message);
             return VerifyStatus(status, SuccessCode);
         }
         catch (TException)
@@ -516,7 +516,7 @@ public class Session
             try
             {
                 var status = await client.ServiceClient.insertRecordsAsync(req);
-                _logger.DebugFormat("insert multiple records to devices {0}, server message: {1}", deviceId, status.Message);
+                //_logger.DebugFormat("insert multiple records to devices {0}, server message: {1}", deviceId, status.Message);
                 return VerifyStatus(status, SuccessCode);
             }
             catch (TException ex)
@@ -537,7 +537,7 @@ public class Session
         try
         {
             var status = await client.ServiceClient.insertTabletAsync(req);
-            _logger.DebugFormat("insert one tablet to device {0}, server message: {1}", tablet.DeviceId, status.Message);
+            //_logger.DebugFormat("insert one tablet to device {0}, server message: {1}", tablet.DeviceId, status.Message);
             return VerifyStatus(status, SuccessCode);
         }
         catch (TException)
@@ -549,7 +549,7 @@ public class Session
             try
             {
                 var status = await client.ServiceClient.insertTabletAsync(req);
-                _logger.DebugFormat("insert one tablet to device {0}, server message: {1}", tablet.DeviceId, status.Message);
+                //_logger.DebugFormat("insert one tablet to device {0}, server message: {1}", tablet.DeviceId, status.Message);
                 return VerifyStatus(status, SuccessCode);
             }
             catch (TException ex)
@@ -570,7 +570,7 @@ public class Session
         try
         {
             var status = await client.ServiceClient.insertTabletsAsync(req);
-            _logger.DebugFormat("insert multiple tablets, message: {0}", status.Message);
+            //_logger.DebugFormat("insert multiple tablets, message: {0}", status.Message);
             return VerifyStatus(status, SuccessCode);
         }
         catch (TException)
@@ -582,7 +582,7 @@ public class Session
             try
             {
                 var status = await client.ServiceClient.insertTabletsAsync(req);
-                _logger.DebugFormat("insert multiple tablets, message: {0}", status.Message);
+                //_logger.DebugFormat("insert multiple tablets, message: {0}", status.Message);
                 return VerifyStatus(status, SuccessCode);
             }
             catch (TException ex)
@@ -603,7 +603,7 @@ public class Session
         try
         {
             var status = await client.ServiceClient.insertRecordsOfOneDeviceAsync(req);
-            _logger.DebugFormat("insert records of one device, message: {0}", status.Message);
+            //_logger.DebugFormat("insert records of one device, message: {0}", status.Message);
             return VerifyStatus(status, SuccessCode);
         }
         catch (TException)
@@ -615,7 +615,7 @@ public class Session
             try
             {
                 var status = await client.ServiceClient.insertRecordsOfOneDeviceAsync(req);
-                _logger.DebugFormat("insert records of one device, message: {0}", status.Message);
+                //_logger.DebugFormat("insert records of one device, message: {0}", status.Message);
                 return VerifyStatus(status, SuccessCode);
             }
             catch (TException ex)
@@ -679,7 +679,7 @@ public class Session
         {
             var resp = await client.ServiceClient.executeUpdateStatementAsync(req);
             var status = resp.Status;
-            _logger.DebugFormat("execute non-query statement {0} message: {1}", sql, status.Message);
+            //_logger.DebugFormat("execute non-query statement {0} message: {1}", sql, status.Message);
             return VerifyStatus(status, SuccessCode);
         }
         catch (TException)
@@ -693,7 +693,7 @@ public class Session
             {
                 var resp = await client.ServiceClient.executeUpdateStatementAsync(req);
                 var status = resp.Status;
-                _logger.DebugFormat("execute non-query statement {0} message: {1}", sql, status.Message);
+                //_logger.DebugFormat("execute non-query statement {0} message: {1}", sql, status.Message);
                 return VerifyStatus(status, SuccessCode);
             }
             catch (TException ex)
@@ -714,7 +714,7 @@ public class Session
         try
         {
             var status = await client.ServiceClient.createSchemaTemplateAsync(req);
-            _logger.DebugFormat("create schema template {0} message: {1}", template.Name, status.Message);
+            //_logger.DebugFormat("create schema template {0} message: {1}", template.Name, status.Message);
             return VerifyStatus(status, SuccessCode);
         }
         catch (TException)
@@ -726,7 +726,7 @@ public class Session
             try
             {
                 var status = await client.ServiceClient.createSchemaTemplateAsync(req);
-                _logger.DebugFormat("create schema template {0} message: {1}", template.Name, status.Message);
+                //_logger.DebugFormat("create schema template {0} message: {1}", template.Name, status.Message);
                 return VerifyStatus(status, SuccessCode);
             }
             catch (TException ex)
@@ -747,7 +747,7 @@ public class Session
         try
         {
             var status = await client.ServiceClient.dropSchemaTemplateAsync(req);
-            _logger.DebugFormat("drop schema template {0} message: {1}", templateName, status.Message);
+            //_logger.DebugFormat("drop schema template {0} message: {1}", templateName, status.Message);
             return VerifyStatus(status, SuccessCode);
         }
         catch (TException)
@@ -759,7 +759,7 @@ public class Session
             try
             {
                 var status = await client.ServiceClient.dropSchemaTemplateAsync(req);
-                _logger.DebugFormat("drop schema template {0} message: {1}", templateName, status.Message);
+                //_logger.DebugFormat("drop schema template {0} message: {1}", templateName, status.Message);
                 return VerifyStatus(status, SuccessCode);
             }
             catch (TException ex)
@@ -780,7 +780,7 @@ public class Session
         try
         {
             var status = await client.ServiceClient.setSchemaTemplateAsync(req);
-            _logger.DebugFormat("set schema template {0} message: {1}", templateName, status.Message);
+            //_logger.DebugFormat("set schema template {0} message: {1}", templateName, status.Message);
             return VerifyStatus(status, SuccessCode);
         }
         catch (TException)
@@ -792,7 +792,7 @@ public class Session
             try
             {
                 var status = await client.ServiceClient.setSchemaTemplateAsync(req);
-                _logger.DebugFormat("set schema template {0} message: {1}", templateName, status.Message);
+                //_logger.DebugFormat("set schema template {0} message: {1}", templateName, status.Message);
                 return VerifyStatus(status, SuccessCode);
             }
             catch (TException ex)
@@ -813,7 +813,7 @@ public class Session
         try
         {
             var status = await client.ServiceClient.unsetSchemaTemplateAsync(req);
-            _logger.DebugFormat("unset schema template {0} message: {1}", templateName, status.Message);
+            //_logger.DebugFormat("unset schema template {0} message: {1}", templateName, status.Message);
             return VerifyStatus(status, SuccessCode);
         }
         catch (TException)
@@ -825,7 +825,7 @@ public class Session
             try
             {
                 var status = await client.ServiceClient.unsetSchemaTemplateAsync(req);
-                _logger.DebugFormat("unset schema template {0} message: {1}", templateName, status.Message);
+                //_logger.DebugFormat("unset schema template {0} message: {1}", templateName, status.Message);
                 return VerifyStatus(status, SuccessCode);
             }
             catch (TException ex)
@@ -850,7 +850,7 @@ public class Session
         try
         {
             var status = await client.ServiceClient.appendSchemaTemplateAsync(req);
-            _logger.DebugFormat("add aligned measurements in template {0} message: {1}", templateName, status.Message);
+            //_logger.DebugFormat("add aligned measurements in template {0} message: {1}", templateName, status.Message);
             return VerifyStatus(status, SuccessCode);
         }
         catch (TException)
@@ -862,7 +862,7 @@ public class Session
             try
             {
                 var status = await client.ServiceClient.appendSchemaTemplateAsync(req);
-                _logger.DebugFormat("add aligned measurements in template {0} message: {1}", templateName, status.Message);
+                //_logger.DebugFormat("add aligned measurements in template {0} message: {1}", templateName, status.Message);
                 return VerifyStatus(status, SuccessCode);
             }
             catch (TException ex)
@@ -887,7 +887,7 @@ public class Session
         try
         {
             var status = await client.ServiceClient.appendSchemaTemplateAsync(req);
-            _logger.DebugFormat("add unaligned measurements in template {0} message: {1}", templateName, status.Message);
+            //_logger.DebugFormat("add unaligned measurements in template {0} message: {1}", templateName, status.Message);
             return VerifyStatus(status, SuccessCode);
         }
         catch (TException)
@@ -899,7 +899,7 @@ public class Session
             try
             {
                 var status = await client.ServiceClient.appendSchemaTemplateAsync(req);
-                _logger.DebugFormat("add unaligned measurements in template {0} message: {1}", templateName, status.Message);
+                //_logger.DebugFormat("add unaligned measurements in template {0} message: {1}", templateName, status.Message);
                 return VerifyStatus(status, SuccessCode);
             }
             catch (TException ex)
@@ -920,7 +920,7 @@ public class Session
         try
         {
             var status = await client.ServiceClient.pruneSchemaTemplateAsync(req);
-            _logger.DebugFormat("delete node in template {0} message: {1}", templateName, status.Message);
+            //_logger.DebugFormat("delete node in template {0} message: {1}", templateName, status.Message);
             return VerifyStatus(status, SuccessCode);
         }
         catch (TException)
@@ -932,7 +932,7 @@ public class Session
             try
             {
                 var status = await client.ServiceClient.pruneSchemaTemplateAsync(req);
-                _logger.DebugFormat("delete node in template {0} message: {1}", templateName, status.Message);
+                //_logger.DebugFormat("delete node in template {0} message: {1}", templateName, status.Message);
                 return VerifyStatus(status, SuccessCode);
             }
             catch (TException ex)
@@ -954,7 +954,7 @@ public class Session
         {
             var resp = await client.ServiceClient.querySchemaTemplateAsync(req);
             var status = resp.Status;
-            _logger.DebugFormat("count measurements in template {0} message: {1}", name, status.Message);
+            //_logger.DebugFormat("count measurements in template {0} message: {1}", name, status.Message);
             VerifyStatus(status, SuccessCode);
             return resp.Count;
         }
@@ -968,7 +968,7 @@ public class Session
             {
                 var resp = await client.ServiceClient.querySchemaTemplateAsync(req);
                 var status = resp.Status;
-                _logger.DebugFormat("count measurements in template {0} message: {1}", name, status.Message);
+                //_logger.DebugFormat("count measurements in template {0} message: {1}", name, status.Message);
                 VerifyStatus(status, SuccessCode);
                 return resp.Count;
             }
@@ -992,7 +992,7 @@ public class Session
         {
             var resp = await client.ServiceClient.querySchemaTemplateAsync(req);
             var status = resp.Status;
-            _logger.DebugFormat("is measurement in template {0} message: {1}", templateName, status.Message);
+            //_logger.DebugFormat("is measurement in template {0} message: {1}", templateName, status.Message);
             VerifyStatus(status, SuccessCode);
             return resp.Result;
         }
@@ -1006,7 +1006,7 @@ public class Session
             {
                 var resp = await client.ServiceClient.querySchemaTemplateAsync(req);
                 var status = resp.Status;
-                _logger.DebugFormat("is measurement in template {0} message: {1}", templateName, status.Message);
+                //_logger.DebugFormat("is measurement in template {0} message: {1}", templateName, status.Message);
                 VerifyStatus(status, SuccessCode);
                 return resp.Result;
             }
@@ -1030,7 +1030,7 @@ public class Session
         {
             var resp = await client.ServiceClient.querySchemaTemplateAsync(req);
             var status = resp.Status;
-            _logger.DebugFormat("is path exist in template {0} message: {1}", templateName, status.Message);
+            //_logger.DebugFormat("is path exist in template {0} message: {1}", templateName, status.Message);
             VerifyStatus(status, SuccessCode);
             return resp.Result;
         }
@@ -1044,7 +1044,7 @@ public class Session
             {
                 var resp = await client.ServiceClient.querySchemaTemplateAsync(req);
                 var status = resp.Status;
-                _logger.DebugFormat("is path exist in template {0} message: {1}", templateName, status.Message);
+                //_logger.DebugFormat("is path exist in template {0} message: {1}", templateName, status.Message);
                 VerifyStatus(status, SuccessCode);
                 return resp.Result;
             }
@@ -1068,7 +1068,7 @@ public class Session
         {
             var resp = await client.ServiceClient.querySchemaTemplateAsync(req);
             var status = resp.Status;
-            _logger.DebugFormat("get measurements in template {0} message: {1}", templateName, status.Message);
+            //_logger.DebugFormat("get measurements in template {0} message: {1}", templateName, status.Message);
             VerifyStatus(status, SuccessCode);
             return resp.Measurements;
         }
@@ -1082,7 +1082,7 @@ public class Session
             {
                 var resp = await client.ServiceClient.querySchemaTemplateAsync(req);
                 var status = resp.Status;
-                _logger.DebugFormat("get measurements in template {0} message: {1}", templateName, status.Message);
+                //_logger.DebugFormat("get measurements in template {0} message: {1}", templateName, status.Message);
                 VerifyStatus(status, SuccessCode);
                 return resp.Measurements;
             }
@@ -1105,7 +1105,7 @@ public class Session
         {
             var resp = await client.ServiceClient.querySchemaTemplateAsync(req);
             var status = resp.Status;
-            _logger.DebugFormat("get all templates message: {0}", status.Message);
+            //_logger.DebugFormat("get all templates message: {0}", status.Message);
             VerifyStatus(status, SuccessCode);
             return resp.Measurements;
         }
@@ -1119,7 +1119,7 @@ public class Session
             {
                 var resp = await client.ServiceClient.querySchemaTemplateAsync(req);
                 var status = resp.Status;
-                _logger.DebugFormat("get all templates message: {0}", status.Message);
+                //_logger.DebugFormat("get all templates message: {0}", status.Message);
                 VerifyStatus(status, SuccessCode);
                 return resp.Measurements;
             }
@@ -1142,7 +1142,7 @@ public class Session
         {
             var resp = await client.ServiceClient.querySchemaTemplateAsync(req);
             var status = resp.Status;
-            _logger.DebugFormat("get paths template set on {0} message: {1}", templateName, status.Message);
+            //_logger.DebugFormat("get paths template set on {0} message: {1}", templateName, status.Message);
             VerifyStatus(status, SuccessCode);
             return resp.Measurements;
         }
@@ -1156,7 +1156,7 @@ public class Session
             {
                 var resp = await client.ServiceClient.querySchemaTemplateAsync(req);
                 var status = resp.Status;
-                _logger.DebugFormat("get paths template set on {0} message: {1}", templateName, status.Message);
+                //_logger.DebugFormat("get paths template set on {0} message: {1}", templateName, status.Message);
                 VerifyStatus(status, SuccessCode);
                 return resp.Measurements;
             }
@@ -1179,7 +1179,7 @@ public class Session
         {
             var resp = await client.ServiceClient.querySchemaTemplateAsync(req);
             var status = resp.Status;
-            _logger.DebugFormat("get paths template using on {0} message: {1}", templateName, status.Message);
+            //_logger.DebugFormat("get paths template using on {0} message: {1}", templateName, status.Message);
             VerifyStatus(status, SuccessCode);
             return resp.Measurements;
         }
@@ -1193,7 +1193,7 @@ public class Session
             {
                 var resp = await client.ServiceClient.querySchemaTemplateAsync(req);
                 var status = resp.Status;
-                _logger.DebugFormat("get paths template using on {0} message: {1}", templateName, status.Message);
+                //_logger.DebugFormat("get paths template using on {0} message: {1}", templateName, status.Message);
                 VerifyStatus(status, SuccessCode);
                 return resp.Measurements;
             }
