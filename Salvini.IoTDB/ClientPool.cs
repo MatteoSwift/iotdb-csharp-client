@@ -3,20 +3,23 @@ using System.Collections.Concurrent;
 
 namespace Salvini.IoTDB;
 
-public class ClientPool:IEnumerable<Client>
+public class ClientPool : IEnumerable<Client>
 {
+    private bool init = false;
     private ConcurrentQueue<Client> _clients { get; } = new ConcurrentQueue<Client>();
- 
+
     public void Add(Client client)
     {
+        init = true;
         Monitor.Enter(_clients);
         _clients.Enqueue(client);
         Monitor.Pulse(_clients);
         Monitor.Exit(_clients);
-    } 
+    }
 
     public Client Take()
     {
+        if (!init) throw new Exception("Please Add some clients before Take!");
         Monitor.Enter(_clients);
         if (_clients.IsEmpty)
         {
